@@ -11,3 +11,5 @@
 
 pkg/
 src/
+.pyc
+__pycache__
