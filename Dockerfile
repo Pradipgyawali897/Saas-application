@@ -70,4 +70,3 @@ RUN apt-get remove --purge -y \
 
 # Run the Django project via the runtime script
 # when the container starts
-CMD ./paracord_runner.sh
