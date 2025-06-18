@@ -10,7 +10,7 @@
 *.sig
 .env
 local-cdn
-
+staticfiles
 pkg/
 .pyc
 __pycache__

@@ -25,7 +25,6 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
-print(f"DEBUG: {DEBUG}")
 
 ALLOWED_HOSTS = ['.railway.app']
 if DEBUG:
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'visits',
+    'commando',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 STATIC_URL = 'static/'
 STATICFILES_BASE_DIR=BASE_DIR/'staticfiles'
-
+STATICFILES_VENDOR_DIR=STATICFILES_BASE_DIR/'vendors'
 STATICFILES_DIRS=[
     STATICFILES_BASE_DIR
 ]
