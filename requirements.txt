@@ -1,4 +1,6 @@
 django
 pillow 
 gunicorn
-
+python-decouple
+psycopg[binary]
+dj-database-url
