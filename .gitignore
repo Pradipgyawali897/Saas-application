@@ -9,6 +9,7 @@
 *.log.*
 *.sig
 .env
+local-cdn
 
 pkg/
 .pyc
