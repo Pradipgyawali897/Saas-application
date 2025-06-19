@@ -50,7 +50,7 @@ ENV DEBUG=${debug}
 # database isn't available during build
 # run any other commands that do not need the database
 # such as:
-R UN python manage.py vendor_pull
+ RUN python manage.py vendor_pull
  RUN python manage.py collectstatic --noinput
 
 # set the Django default project name

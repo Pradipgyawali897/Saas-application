@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -75,7 +76,6 @@ WSGI_APPLICATION = 'cfe_home.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASE_URL = config('DATABASE_URL', default=None, cast=str)
-print(f"DATABASE_URL: {DATABASE_URL}")  # Debug print
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
@@ -125,6 +125,13 @@ STATICFILES_DIRS=[
     STATICFILES_BASE_DIR
 ]
 STATIC_ROOT=BASE_DIR.parent/'local-cdn'
+
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
