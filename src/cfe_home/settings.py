@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'visits',
     'commando',
+    'slippers', 
+    'allauth_ui',
     'allauth',
     'allauth.account',
+    'widget_tweaks',
+    
 ]
 
 MIDDLEWARE = [
