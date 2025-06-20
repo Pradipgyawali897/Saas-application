@@ -6,3 +6,5 @@ psycopg[binary]
 dj-database-url
 requests
 whitenoise
+dotenv
+django-allauth[socialaccount]
