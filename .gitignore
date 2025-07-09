@@ -14,3 +14,4 @@ staticfiles
 pkg/
 .pyc
 __pycache__
+venv
