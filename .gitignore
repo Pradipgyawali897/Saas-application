@@ -15,3 +15,4 @@ pkg/
 .pyc
 __pycache__
 venv
+migrations

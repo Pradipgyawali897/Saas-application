@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'commando',
     'slippers',
     'subscriptions',
+    'constumers',
 
     "allauth_ui",
     'allauth',
