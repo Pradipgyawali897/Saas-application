@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-
+import helpers
 
 SUBSCRIPTION_PERMISSIONS =  [
         ('advanced', "Advanced Permission"),
@@ -21,12 +21,26 @@ class Subscription(models.Model):
             'codename__in': [x[0] for x in SUBSCRIPTION_PERMISSIONS]
         }
     )
+    stripe_id=models.CharField(max_length=150)
 
     class Meta:
         permissions = SUBSCRIPTION_PERMISSIONS
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.stripe_id:
+            if self.init_email_confirmed and self.init_email:
+                email = self.init_email
+                if email:
+                    response = helpers.billing.create_product(
+                        name=self.user.username,
+                        raw=False,
+                        metadata={'subscription_plan_id':self.id,'uesrname':self.user.username},
+                    )   
+                    self.stripe_id = response.id
+        return super().save(*args, **kwargs)
 
 
 
