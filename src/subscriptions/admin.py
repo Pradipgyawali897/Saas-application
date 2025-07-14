@@ -1,22 +1,21 @@
 from django.contrib import admin
-from django.contrib.admin import ModelAdmin
-from .models import Subscription,UserSubscription,SubscriptionPrice
 
-class UserSubscriptionModel(ModelAdmin):
-    list_display=['user','subscription','date']
-admin.site.register(UserSubscription,UserSubscriptionModel)
+# Register your models here.
+from .models import Subscription, SubscriptionPrice, UserSubscription
 
-
-
-class SubscriptionPriceAdmin(admin.TabularInline):
-    model=SubscriptionPrice
-    readonly_fields=['stripe_id']
-    extra=1
-
-admin.site.register(SubscriptionPrice)
+class SubscriptionPrice(admin.StackedInline):
+    model = SubscriptionPrice
+    readonly_fields = ['stripe_id']
+    can_delete = False
+    extra = 0
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    inlines=[SubscriptionPriceAdmin]
-    list_display=['name','active']
+    inlines = [SubscriptionPrice]
+    list_display = ['name', 'active']
+    readonly_fields = ['stripe_id']
 
-admin.site.register(Subscription,SubscriptionAdmin)
+
+admin.site.register(Subscription, SubscriptionAdmin)
+
+
+admin.site.register(UserSubscription)
