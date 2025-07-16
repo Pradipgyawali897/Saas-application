@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     # django-apps
     "django.contrib.admin",
     "django.contrib.auth",
+    'slippers',
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -119,11 +120,16 @@ WSGI_APPLICATION = "cfehome.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
+
 
 CONN_MAX_AGE = config("CONN_MAX_AGE", cast=int, default=300)
 DATABASE_URL = config("DATABASE_URL", default=None)
@@ -178,10 +184,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Django Allauth Config 
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_EMAIL_VERIFICATION="mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX="[CFE] "
-ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
 AUTHENTICATION_BACKENDS = [
     # ...

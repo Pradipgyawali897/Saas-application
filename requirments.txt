@@ -1,14 +1,11 @@
-django
-pillow 
+Django>=5.0,<5.1
 gunicorn
 python-decouple
 psycopg[binary]
 dj-database-url
 requests
 whitenoise
-dotenv
 django-allauth[socialaccount]
 django-allauth-ui
 django-widget-tweaks
-slippers
 stripe

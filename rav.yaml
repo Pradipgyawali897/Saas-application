@@ -1,0 +1,5 @@
+scripts:
+  install:
+    -venv/bin/pip-compile/ src requirments/prod.in -o requirments.txt
+  intall_dev:
+    -pip-compile
