@@ -1,9 +1,9 @@
 from typing import Any
 
+from django.apps import apps
 from django.core.management import BaseCommand, call_command
 from django.db import connection
 from django.conf import settings
-from django.apps import apps
 from django.db.migrations.executor import MigrationExecutor
 
 from helpers.db import statements as db_statements
@@ -11,22 +11,25 @@ from helpers.db import statements as db_statements
 class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any):
-        schemas = ["example"]
+        Tenant = apps.get_model("tenants", "Tenants")
+        with connection.cursor() as cursor:
+            cursor.execute(
+                db_statements.CREATE_SCHEMA_SQL.format(schema_name="public")
+            )
+            cursor.execute(
+                db_statements.ACTIVATE_SCHEMA_SQL.format(schema_name="public")
+            )
+        qs = Tenant.objects.filter(active=True)
+        # schemas = list(qs.values_list('schema_name', flat=True))
         skip_public = True
 
         if not skip_public:
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    db_statements.CREATE_SCHEMA_SQL.format(schema_name="public")
-                )
-                cursor.execute(
-                    db_statements.ACTIVATE_SCHEMA_SQL.format(schema_name="public")
-                )
-                call_command("migrate", interactive=False)
+            call_command("migrate", interactive=False)
 
         
         
-        for schema_name in schemas:
+        for tenant_obj in qs:
+            schema_name = tenant_obj.schema_name
             # Check if the schema already exists
             with connection.cursor() as cursor:
                 cursor.execute("""
@@ -50,7 +53,7 @@ class Command(BaseCommand):
             loader = executor.loader
             loader.build_graph()  # Ensure the graph is up-to-date
 
-            customer_apps = getattr(settings, 'CUSTOMER_INSTALLED_APPS', [])
+            customer_apps = getattr(settings, 'CONSTUMER_INSTALLED_APPS', [])
             customer_app_configs = [
                 app_config for app_config in apps.get_app_configs()
                 if app_config.name in customer_apps

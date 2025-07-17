@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from decouple import config
 from pathlib import Path
-from .installed import _INSTALLED_APPS,_CONSTUMER_INSTALLED_APPS
+from .installed import _INSTALLED_APPS,CONSTUMER_INSTALLED_APPS
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -60,7 +60,7 @@ if DEBUG:
 # Application definition
 
 INSTALLED_APPS = _INSTALLED_APPS
-CONSTUMER_INSTALLED_APPS=_CONSTUMER_INSTALLED_APPS
+CONSTUMER_INSTALLED_APPS=CONSTUMER_INSTALLED_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

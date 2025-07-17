@@ -39,7 +39,9 @@ _INSTALLED_APPS=APPS+[
     "profiles",
     "subscriptions",
     "visits",
+    "tenants",
 ]
 
 
 _INSTALLED_APPS=list(set(_INSTALLED_APPS)) #filter to remove the dupllicate
+CONSTUMER_INSTALLED_APPS=list(set(_CONSTUMER_INSTALLED_APPS))
