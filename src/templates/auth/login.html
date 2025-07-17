@@ -1,17 +1,37 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
-
-<form method="POST" action="/login/">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" />
-    <input type="password" name="password" placeholder="Your Password" />
-    
-    <button type="submit">Login</button>
-</form>
-
-
-
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Login</h2>
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            Invalid username or password. Please try again.
+                        </div>
+                    {% endif %}
+                    <form method="POST" action="/login/">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required />
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">
+                        Don't have an account? <a href="/register/">Register</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -10,5 +10,5 @@ class Command(BaseCommand):
         schema_name = 'example'
         with connection.cursor() as cursor:
             cursor.execute(
-                db_statements.CREATE_SCHEMA_SQL.format(schema_name=schema_name)
+                db_statements.DROP_SCHEMA_SQL.format(schema_name=schema_name)
             )

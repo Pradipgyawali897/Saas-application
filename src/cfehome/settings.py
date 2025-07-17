@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from decouple import config
 from pathlib import Path
-
+from .installed import _INSTALLED_APPS,_CONSTUMER_INSTALLED_APPS
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -59,29 +59,8 @@ if DEBUG:
 
 # Application definition
 
-INSTALLED_APPS = [
-    # django-apps
-    "django.contrib.admin",
-    "django.contrib.auth",
-    'slippers',
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    # my-apps
-    "commando",
-    "customers",
-    "profiles",
-    "subscriptions",
-    "visits",
-    # third-party-apps
-    "allauth_ui",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
-    "widget_tweaks",
-]
+INSTALLED_APPS = _INSTALLED_APPS
+CONSTUMER_INSTALLED_APPS=_CONSTUMER_INSTALLED_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -119,20 +98,12 @@ WSGI_APPLICATION = "cfehome.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
-    }
-}
-
 
 CONN_MAX_AGE = config("CONN_MAX_AGE", cast=int, default=300)
 DATABASE_URL = config("DATABASE_URL", default=None)
+
+REDIS_CACHE_URL = config("REDIS_CACHE_URL", default=None)
+
 
 if DATABASE_URL is not None:
     import dj_database_url
@@ -141,8 +112,38 @@ if DATABASE_URL is not None:
             default=DATABASE_URL,
             conn_max_age=CONN_MAX_AGE,
             conn_health_checks=True,
-        )
+            engine="django.db.backends.postgresql"
+        ),
     }
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT'),
+        }
+    }
+
+
+## REDIS CACHING
+
+REDIS_CACHE_URL = config("REDIS_CACHE_URL", default=None)
+
+if REDIS_CACHE_URL is not None:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": REDIS_CACHE_URL,
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
+        }
+    }
+
 
 
 # Add these at the top of your settings.py
