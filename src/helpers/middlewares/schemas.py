@@ -1,5 +1,4 @@
-from django.db import connection
-from helpers.db import statements,schemas
+from helpers.db import schemas
 from django.apps import apps
 class SchemaMiddleware:
     def __init__(self, get_response):

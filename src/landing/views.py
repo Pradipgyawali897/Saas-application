@@ -1,12 +1,13 @@
 import helpers.numbers
 from django.shortcuts import render
-
+from django.db import connection
 # Create your views here.
 from dashboard.views import dashboard_view
 
 from visits.models import PageVisit
 
 def landing_dashboard_page_view(request):
+    print(connection.schema_name)
     if request.user.is_authenticated:
         return dashboard_view(request)
     qs = PageVisit.objects.all()
