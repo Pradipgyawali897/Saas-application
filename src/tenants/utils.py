@@ -1,6 +1,5 @@
 import hashlib
 
-
 def geerate_unique_schema_name(tenant_id:str):
     base_name=f"tenant_{tenant_id}"
     base_name=base_name.replace("-","")
