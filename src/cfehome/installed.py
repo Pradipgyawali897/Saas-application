@@ -40,6 +40,7 @@ _INSTALLED_APPS=APPS+[
     "subscriptions",
     "visits",
     "tenants",
+    "constum_auth",
 ]
 
 
