@@ -1,48 +1,65 @@
+# installed.py
 
-
-Django_APPS=[
-    # django-apps
+Django_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
-    'slippers',
+    "slippers",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles", 
-  
+    "django.contrib.staticfiles",
 ]
-APPS=Django_APPS+[
-      # third-party-apps
+
+APPS = Django_APPS + [
     "allauth_ui",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
     "widget_tweaks",
 ]
 
-
-_CONSTUMER_INSTALLED_APPS=APPS+[
-    # my-apps
+CUSTOMER_INSTALLED_APPS = APPS + [
     "commando",
     "profiles",
     "visits",
 ]
 
-
-
-_INSTALLED_APPS=APPS+[
-    # my-apps
+INSTALLED_APPS = APPS + [
+    "constum_auth",
+    "tenants",
     "commando",
-    "customers",
     "customers",
     "profiles",
     "subscriptions",
     "visits",
-    "tenants",
-    "constum_auth",
 ]
 
+_INSTALLED_APPS = list(set(INSTALLED_APPS))
+CONSTUMER_INSTALLED_APPS = list(set(CUSTOMER_INSTALLED_APPS))
 
-_INSTALLED_APPS=list(set(_INSTALLED_APPS)) #filter to remove the dupllicate
-CONSTUMER_INSTALLED_APPS=list(set(_CONSTUMER_INSTALLED_APPS))
+SHARED_APPS = (
+    "constum_auth",
+    "tenants",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+)
+
+TENANT_APPS = (
+    "django.contrib.admin",
+    "django.contrib.staticfiles",
+    "slippers",
+    "allauth_ui",
+    "widget_tweaks",
+    "commando",
+    "customers",
+    "profiles",
+    "subscriptions",
+    "visits",
+)
