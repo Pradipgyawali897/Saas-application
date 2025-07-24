@@ -25,7 +25,6 @@ APPS=Django_APPS+[
 _CONSTUMER_INSTALLED_APPS=APPS+[
     # my-apps
     "commando",
-    "customers",
     "profiles",
     "visits",
 ]
@@ -35,6 +34,7 @@ _CONSTUMER_INSTALLED_APPS=APPS+[
 _INSTALLED_APPS=APPS+[
     # my-apps
     "commando",
+    "customers",
     "customers",
     "profiles",
     "subscriptions",
