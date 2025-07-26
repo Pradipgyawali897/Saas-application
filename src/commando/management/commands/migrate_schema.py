@@ -27,7 +27,7 @@ class Command(BaseCommand):
                     db_statements.CREATE_SCHEMA_SQL.format(schema_name=DEFAULT_SCHEMA)
                 )
 
-        skip_public = True
+        skip_public = False
 
         if not skip_public:
             with use_public_schema():
