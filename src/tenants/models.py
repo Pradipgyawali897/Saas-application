@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from helpers.db.validators import validate_block_subdomain,validate_subdomain
 from  .utils import geerate_unique_schema_name
+from django.core.management import call_command
 
 class Tenants(models.Model):
     id=models.UUIDField(default=uuid.uuid4,primary_key=True,db_index=True,editable=False)
