@@ -4,7 +4,7 @@ from django.contrib.auth.models import Permission
 from django.utils import timezone
 import random
 import string
-from constum_auth.validate.otp import send_otp,validate_otp
+from constum_auth.validate.otp import send_otp
 
 class SaasUser(models.Model):
     email = models.EmailField(unique=True)

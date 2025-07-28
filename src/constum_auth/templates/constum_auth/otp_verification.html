@@ -1,25 +1,28 @@
-{% extends "constum_auth/base.html" %}
+{% extends 'constum_auth/base.html' %}
+
+{% block title %}Verify OTP{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-    <h2>Verify OTP</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    {% endif %}
-    <form method="POST" action="{% url 'verify_otp' %}">
+    <h1>Verify OTP</h1>
+    <p style="text-align: center; margin-bottom: 1.5rem; color: #666;">
+        Enter the OTP sent to your email address.
+    </p>
+    
+    <form method="post">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="otp" class="form-label">Enter OTP</label>
-            <input type="text" class="form-control" id="otp" name="otp" required>
+        
+        <div class="form-group">
+            <label for="otp">OTP Code:</label>
+            <input type="number" id="otp" name="otp" required maxlength="6" placeholder="Enter 6-digit OTP">
         </div>
+        
         <input type="hidden" name="email" value="{{ request.session.email }}">
         <input type="hidden" name="purpose" value="{{ request.session.purpose }}">
-        <button type="submit" class="btn btn-primary">Verify OTP</button>
-        <a href="{% url 'forgot_password' %}" class="btn btn-link">Resend OTP</a>
+        
+        <button type="submit" class="btn">Verify OTP</button>
     </form>
-</div>
+    
+    <div class="links">
+        <a href="{% url 'resend_otp' %}">Didn't receive OTP? Resend</a>
+    </div>
 {% endblock %}

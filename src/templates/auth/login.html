@@ -12,7 +12,7 @@
                             Invalid username or password. Please try again.
                         </div>
                     {% endif %}
-                    <form method="POST" action="/login/">
+                    <form method="POST" action="login">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
@@ -27,7 +27,7 @@
                         </div>
                     </form>
                     <p class="text-center mt-3">
-                        Don't have an account? <a href="/register/">Register</a>
+                        Don't have an account? <a href="{% url "signup" %}">Register</a>
                     </p>
                 </div>
             </div>

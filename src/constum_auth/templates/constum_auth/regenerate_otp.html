@@ -1,0 +1,19 @@
+{% extends 'constum_auth/base.html' %}
+
+{% block title %}Resend OTP{% endblock %}
+
+{% block content %}
+    <h1>Resend OTP</h1>
+    <p style="text-align: center; margin-bottom: 1.5rem; color: #666;">
+        Click the button below to receive a new OTP code.
+    </p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn">Resend OTP</button>
+    </form>
+    
+    <div class="links">
+        <a href="{% url 'verify_otp' %}">Back to OTP Verification</a>
+    </div>
+{% endblock %}
