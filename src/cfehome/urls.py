@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from constum_auth import views as auth_views
 from checkouts import views as checkout_views
 from landing import views as landing_views
 from subscriptions import views as subscriptions_views
@@ -30,6 +29,7 @@ from .views import (
 
 urlpatterns = [
     path("", landing_views.landing_dashboard_page_view, name='home'),
+    path("saas/accounts/",include('constum_auth.urls')),
     path("checkout/sub-price/<int:price_id>/", 
             checkout_views.product_price_redirect_view,
             name='sub-price-checkout'

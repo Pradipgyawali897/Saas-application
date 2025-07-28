@@ -1,0 +1,25 @@
+{% extends "constum_auth/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Verify OTP</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form method="POST" action="{% url 'verify_otp' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="otp" class="form-label">Enter OTP</label>
+            <input type="text" class="form-control" id="otp" name="otp" required>
+        </div>
+        <input type="hidden" name="email" value="{{ request.session.email }}">
+        <input type="hidden" name="purpose" value="{{ request.session.purpose }}">
+        <button type="submit" class="btn btn-primary">Verify OTP</button>
+        <a href="{% url 'forgot_password' %}" class="btn btn-link">Resend OTP</a>
+    </form>
+</div>
+{% endblock %}

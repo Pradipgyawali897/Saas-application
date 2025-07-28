@@ -31,7 +31,6 @@ class SaasUser(models.Model):
             self.set_password(self.password_hash)
         super().save(*args, **kwargs)
         send_otp(self)
-        validate_otp()
 
 class OTP(models.Model):
     PURPOSE_CHOICES = [
@@ -40,7 +39,7 @@ class OTP(models.Model):
     ]
     
     user = models.ForeignKey(SaasUser, on_delete=models.CASCADE)
-    code = models.CharField(max_length=6, default='000000')
+    code = models.CharField(max_length=6)
     expiry_time = models.DateTimeField()
     purpose = models.CharField(max_length=30, choices=PURPOSE_CHOICES)
 
