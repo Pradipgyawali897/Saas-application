@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import Permission
 from django.utils import timezone
-from datetime import timedelta
 import random
-
+import string
+from constum_auth.validate.otp import send_otp,validate_otp
 
 class SaasUser(models.Model):
     email = models.EmailField(unique=True)
@@ -30,25 +30,24 @@ class SaasUser(models.Model):
         if self.password_hash and not self.password_hash.startswith('pbkdf2_sha256$'):
             self.set_password(self.password_hash)
         super().save(*args, **kwargs)
-
+        send_otp(self)
+        validate_otp()
 
 class OTP(models.Model):
-    user = models.ForeignKey('SaasUser', on_delete=models.CASCADE)
-    code = models.CharField(max_length=6)  
-    created_at = models.DateTimeField(auto_now_add=True)
+    PURPOSE_CHOICES = [
+        ('login', 'Login'),
+        ('email_verification', 'Email Verification'),
+    ]
+    
+    user = models.ForeignKey(SaasUser, on_delete=models.CASCADE)
+    code = models.CharField(max_length=6, default='000000')
     expiry_time = models.DateTimeField()
-    
-    
-    def is_expired(self):
-        return timezone.now() > self.expiry_time
+    purpose = models.CharField(max_length=30, choices=PURPOSE_CHOICES)
 
     def save(self, *args, **kwargs):
-        def generate_otp():
-            return str(random.randint(100000, 999999))
-        self.code=generate_otp()
+        if not self.code:
+            self.code = ''.join(random.choices(string.digits, k=6))
         if not self.expiry_time:
-            self.expiry_time = timezone.now() + timedelta(minutes=5)
-        
-        
+            self.expiry_time = timezone.now() + timezone.timedelta(minutes=5)
         super().save(*args, **kwargs)
     
